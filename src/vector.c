@@ -78,7 +78,7 @@ bool vector_push(struct Vector *vector, void *element) {
   }
 
   // copy the element to the end of the vector
-  memcpy(&vector->data[vector->length * vector->elem_size], element,
+  memcpy(&((char *)vector->data)[vector->length * vector->elem_size], element,
          vector->elem_size);
 
   vector->length++;
@@ -93,7 +93,7 @@ void *vector_pop(struct Vector *vector) {
   // just reduce the length. we don't actually remove the element
   vector->length--;
 
-  return &vector->data[vector->length * vector->elem_size];
+  return &((char *)vector->data)[vector->length * vector->elem_size];
 }
 
 /**
@@ -105,7 +105,7 @@ void *vector_get(struct Vector *vector, size_t index) {
   assert(vector != NULL);
   assert(index < vector->length);
 
-  return &vector->data[index * vector->elem_size];
+  return &((char *)vector->data)[index * vector->elem_size];
 }
 
 /**
@@ -119,7 +119,8 @@ void vector_set(struct Vector *vector, size_t index, void *element) {
   assert(vector != NULL);
   assert(index < vector->length);
 
-  memcpy(&vector->data[index * vector->elem_size], element, vector->elem_size);
+  memcpy(&((char *)vector->data)[index * vector->elem_size], element,
+         vector->elem_size);
 }
 
 /**
